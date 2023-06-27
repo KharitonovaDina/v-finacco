@@ -1,0 +1,17 @@
+//Fonts
+$primary-f: 'Roboto', sans-serif;
+
+//Colors
+$primary-c: tomato;
+$secondary-c: #F8E0E1;
+$font-c: #DCDCDC;
+
+* {
+  font-family: $primary-f;
+  font-weight: 400;
+  font-size: 16px;
+  color: $font-c;
+}
+
+
+
