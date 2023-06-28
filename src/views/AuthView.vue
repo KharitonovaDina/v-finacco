@@ -1,15 +1,15 @@
 <template>
   <div class="auth">
-    <LoginForm/>
+    <SignUpForm/>
   </div>
 </template>
 
 <script>
-import LoginForm from '@/components/LoginForm.vue';
+import SignUpForm from '@/components/SignUpForm.vue';
 
 export default {
   name: 'AuthView',
-  components: { LoginForm },
+  components: { SignUpForm },
 };
 </script>
 

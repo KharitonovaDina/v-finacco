@@ -7,6 +7,7 @@
         :type="value.type"
         id="input"
         :placeholder= "value.placeholder"
+        :v-model="value.model"
       >
     </label>
   </div>
@@ -36,7 +37,7 @@ export default {
     font-weight: 400;
     line-height: 1.5;
     color: black;
-    background-color: #DCDCDC;
+    background-color: white;
     background-clip: padding-box;
     border: 1px solid black;
     border-radius: 0.25rem;
@@ -48,9 +49,9 @@ export default {
     }
 
     &:focus {
-      color: red;
+      color: rebeccapurple;
       background-color: #fff;
-      border-color: red;
+      border-color: rebeccapurple;
       outline: 0;
       box-shadow: 0 0 0 0.2rem rgba(256, 0, 158, 0.25);
     }
