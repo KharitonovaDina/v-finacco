@@ -13,7 +13,6 @@ export default {
 <style lang="scss" scoped>
   .empty {
     background-color: gray;
-    opacity: 30%;
     height: 100vh;
     width: 100%;
   }

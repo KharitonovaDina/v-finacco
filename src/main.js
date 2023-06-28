@@ -1,8 +1,5 @@
 import Vue from 'vue';
 import { initializeApp } from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/database';
-import firebase from 'firebase/compat/app';
 import App from './App.vue';
 import router from './router';
 import store from './store';
@@ -22,13 +19,8 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig);
 
-let app;
-firebase.auth().onAuthStateChanged(() => {
-  if (!app) {
-    app = new Vue({
-      router,
-      store,
-      render: (h) => h(App),
-    }).$mount('#app');
-  }
-});
+new Vue({
+  router,
+  store,
+  render: (h) => h(App),
+}).$mount('#app');

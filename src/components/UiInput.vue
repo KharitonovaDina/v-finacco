@@ -28,7 +28,7 @@ export default {
 
   .text-field__input {
     display: block;
-    width: 300px;
+    width: 100%;
     height: calc(2.25rem + 2px);
     padding: 0.375rem 0.75rem;
     margin: 0;

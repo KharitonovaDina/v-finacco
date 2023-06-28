@@ -5,15 +5,17 @@
       :key="i"
       :value="item"
     />
+    <UiButton title="Login"/>
   </form>
 </template>
 
 <script>
 import UiInput from '@/components/UiInput.vue';
+import UiButton from '@/components/UiButton.vue';
 
 export default {
   name: 'LoginForm',
-  components: { UiInput },
+  components: { UiButton, UiInput },
   data: () => ({
     inputs: [
       {
