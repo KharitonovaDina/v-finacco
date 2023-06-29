@@ -1,5 +1,5 @@
 <template>
-  <button class="btn">
+  <button class="btn" @click.prevent="$emit('event')">
     {{ title }}
   </button>
 </template>
@@ -15,5 +15,6 @@ export default {
   .btn {
     color: white;
     background-color: rebeccapurple;
+    padding: 6px 0;
   }
 </style>

@@ -1,13 +1,14 @@
 <template>
   <div class="text-field">
     <label class="text-field__label" for="input">
-      {{ value.label }}
+        {{ label }}
       <input
         class="text-field__input"
-        :type="value.type"
+        :type="type"
+        :value="value"
+        @input="$emit('input', $event.target.value)"
         id="input"
-        :placeholder= "value.placeholder"
-        :v-model="value.model"
+        :placeholder= "placeholder"
       >
     </label>
   </div>
@@ -16,7 +17,7 @@
 <script>
 export default {
   name: 'UiInput',
-  props: ['value'],
+  props: ['label', 'type', 'placeholder', 'value'],
 };
 </script>
 

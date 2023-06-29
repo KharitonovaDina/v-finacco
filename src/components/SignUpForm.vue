@@ -1,43 +1,59 @@
 <template>
   <div class="signup">
+    <h1 class="signup__ttl">Зарегистрироваться</h1>
     <span class="signup__warning">
       {{error}}
     </span>
     <form class="signup__form">
-      <label class="signup__label" for="input">
-        Login
-        <input
-          class="signup__input"
-          type="email"
-          id="input"
-          placeholder= "Введите логин"
-          v-model="email"
-        >
-      </label>
-      <label class="signup__label" for="input">
-        Password
-        <input
-          class="signup__input"
-          type="password"
-          id="input"
-          placeholder= "Введите пароль"
-          v-model="password"
-        >
-      </label>
-      <button
+
+      <UiInput
+        label="Логин"
+        type="email"
+        placeholder="Введите логин"
+        v-model="email"
+      />
+
+<!--      <div class="signup__input-wrap">-->
+<!--        <label class="signup__label" for="input">-->
+<!--          Login-->
+<!--          <input-->
+<!--            class="signup__input"-->
+<!--            type="email"-->
+<!--            id="input"-->
+<!--            placeholder= "Введите логин"-->
+<!--            v-model="email"-->
+<!--          >-->
+<!--        </label>-->
+<!--      </div>-->
+<!--      <div class="signup__input-wrap">-->
+<!--        <label class="signup__label" for="input">-->
+<!--          Password-->
+<!--          <input-->
+<!--            class="signup__input"-->
+<!--            type="password"-->
+<!--            id="input"-->
+<!--            placeholder="Введите пароль"-->
+<!--            v-model="password"-->
+<!--          >-->
+<!--        </label>-->
+<!--      </div>-->
+      <UiButton
         class="signup__btn"
-        @click.prevent="signup"
+        title="Sign up"
+        @event="signup"
         :disabled="processing"
-      >
-        Login
-      </button>
+      />
     </form>
   </div>
 </template>
 
 <script>
+import UiButton from '@/components/UiButton.vue';
+import UiInput from '@/components/UiInput.vue';
+
 export default {
   name: 'SignUpForm',
+  components: { UiInput, UiButton },
   data: () => ({
     email: null,
     password: null,
@@ -67,7 +83,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .signup__form {
+  .signup {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -75,8 +91,21 @@ export default {
     padding: 40px;
     background-color: white;
     width: 400px;
-    height: 200px;
+    //height: 200px;
     box-shadow: 1px 1px 1px 1px black;
+  }
+
+  .signup__ttl {
+    font-family: $primary-f;
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 28px;
+  }
+  .signup__form {
+  }
+
+  .signup__input-wrap {
+    margin-bottom: 28px;
   }
 
   .signup__label {
@@ -122,7 +151,6 @@ export default {
   }
 
   .signup__btn {
-    color: white;
-    background-color: rebeccapurple;
+    width: 100px;
   }
 </style>
