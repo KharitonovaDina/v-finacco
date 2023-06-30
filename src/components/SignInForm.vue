@@ -5,33 +5,25 @@
       {{error}}
     </span>
     <form class="signin__form">
-      <div class="signin__input-wrap">
-        <label class="signin__label" for="input">
-          Login
-          <input
-            class="signin__input"
-            type="email"
-            id="input"
-            placeholder= "Введите логин"
-            v-model="email"
-          >
-        </label>
-      </div>
-      <div class="signin__input-wrap">
-        <label class="signin__label" for="input">
-          Password
-          <input
-            class="signin__input"
-            type="password"
-            id="input"
-            placeholder="Введите пароль"
-            v-model="password"
-          >
-        </label>
-      </div>
+      <UiInput
+        class="signin__input"
+        label="Логин"
+        type="email"
+        placeholder="Введите логин"
+        v-model="email"
+      />
+
+      <UiInput
+        class="signin__input"
+        label="Пароль"
+        type="password"
+        placeholder="Введите пароль"
+        v-model="password"
+      />
+
       <UiButton
         class="signin__btn"
-        title="Sign in"
+        title="Войти"
         @event="signin"
         :disabled="processing"
       />
@@ -41,10 +33,11 @@
 
 <script>
 import UiButton from '@/components/UiButton.vue';
+import UiInput from '@/components/UiInput.vue';
 
 export default {
   name: 'SignInForm',
-  components: { UiButton },
+  components: { UiButton, UiInput },
   data: () => ({
     email: null,
     password: null,
@@ -74,74 +67,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.signin {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 40px;
-  background-color: white;
-  width: 400px;
-  //height: 200px;
-  box-shadow: 1px 1px 1px 1px black;
-}
-
-.signin__ttl {
-  font-family: $primary-f;
-  font-weight: 700;
-  font-size: 20px;
-  margin-bottom: 28px;
-}
-.signin__form {
-}
-
-.signin__input-wrap {
-  margin-bottom: 28px;
-}
-
-.signin__label {
-  display: block;
-  margin-bottom: 0.25rem;
-  color: black;
-}
-
-.signin__input {
-  display: block;
-  width: 100%;
-  height: calc(2.25rem + 2px);
-  padding: 0.375rem 0.75rem;
-  margin: 0;
-  font-family: $primary-f;
-  font-weight: 400;
-  line-height: 1.5;
-  color: black;
-  background-color: white;
-  background-clip: padding-box;
-  border: 1px solid black;
-  border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-
-  &::placeholder {
-    color: #212529;
-    opacity: 0.4;
+  .signin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background-color: white;
+    width: 400px;
+    //height: 200px;
+    box-shadow: 1px 1px 1px 1px black;
   }
 
-  &:focus {
-    color: rebeccapurple;
-    background-color: #fff;
-    border-color: rebeccapurple;
-    outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(256, 0, 158, 0.25);
+  .signin__ttl {
+    font-family: $primary-f;
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 28px;
   }
 
-  &:disabled,
-  &:read-only {
-    background-color: rebeccapurple;
-    opacity: 1;
+  .signin__input {
+    margin-bottom: 28px;
   }
-}
 
-.signin__btn {
-  width: 100px;
-}
+  .signin__btn {
+    width: 100%;
+  }
 </style>

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import { initializeApp } from 'firebase/app';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import App from './App.vue';
 import router from './router';
 import store from './store';
@@ -23,4 +24,9 @@ new Vue({
   router,
   store,
   render: (h) => h(App),
+  created() {
+    onAuthStateChanged(getAuth(), (user) => {
+      this.$store.dispatch('stateChanged', user);
+    });
+  },
 }).$mount('#app');

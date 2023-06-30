@@ -1,4 +1,6 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,
+} from 'firebase/auth';
 
 export default {
   state: {
@@ -15,16 +17,20 @@ export default {
       state.user.isAuth = true;
       state.user.userId = payload;
     },
+    unsetUser(state) {
+      state.user = {
+        isAuth: false,
+        userId: null,
+      };
+    },
   },
   actions: {
     signup({ commit }, payload) {
       commit('setProcessing', true);
-      // const auth = getAuth();
+      commit('clearError');
       createUserWithEmailAndPassword(getAuth(), payload.email, payload.password)
-        .then((userCredential) => {
-          commit('setUser', userCredential.user);
+        .then(() => {
           commit('setProcessing', false);
-          console.log(userCredential.user);
           // const user = userCredential.user;
         })
         .catch((error) => {
@@ -37,13 +43,10 @@ export default {
     },
     signin({ commit }, payload) {
       commit('setProcessing', true);
-      // const auth = getAuth();
+      commit('clearError');
       signInWithEmailAndPassword(getAuth(), payload.email, payload.password)
-        .then((userCredential) => {
-          commit('setUser', userCredential.user);
+        .then(() => {
           commit('setProcessing', false);
-          // console.log(userCredential.user);
-          // const user = userCredential.user;
         })
         .catch((error) => {
           commit('setProcessing', false);
@@ -52,6 +55,16 @@ export default {
           // const errorCode = error.code;
           // const errorMessage = error.message;
         });
+    },
+    signout() {
+      signOut(getAuth());
+    },
+    stateChanged({ commit }, payload) {
+      if (payload) {
+        commit('setUser', payload.userId);
+      } else {
+        commit('unsetUser');
+      }
     },
   },
 };
