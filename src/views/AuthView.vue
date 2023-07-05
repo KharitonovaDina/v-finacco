@@ -1,17 +1,15 @@
 <template>
   <div class="auth">
-    <SignUpForm/>
-    <SignInForm/>
   </div>
 </template>
 
 <script>
-import SignUpForm from '@/components/SignUpForm.vue';
-import SignInForm from '@/components/SignInForm.vue';
+// import SignUpForm from '@/components/SignUpForm.vue';
+// import SignInForm from '@/components/SignInForm.vue';
 
 export default {
   name: 'AuthView',
-  components: { SignInForm, SignUpForm },
+  // components: { SignInForm, SignUpForm },
 };
 </script>
 

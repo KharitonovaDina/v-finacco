@@ -55,7 +55,7 @@ export default {
   },
   watch: {
     isUserAuthenticated(val) {
-      if (val === true) this.$router.push('/');
+      if (val === true) console.log('Yes');
     },
   },
   methods: {
@@ -73,10 +73,10 @@ export default {
     justify-content: center;
     align-items: center;
     padding: 40px;
-    background-color: white;
-    width: 400px;
+    //background-color: white;
+    width: 100%;
     //height: 200px;
-    box-shadow: 1px 1px 1px 1px black;
+    //box-shadow: 1px 1px 1px 1px black;
   }
 
   .signin__ttl {

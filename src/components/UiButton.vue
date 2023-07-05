@@ -16,5 +16,6 @@ export default {
     color: white;
     background-color: rebeccapurple;
     padding: 6px 0;
+    border: none;
   }
 </style>
