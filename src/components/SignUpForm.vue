@@ -1,6 +1,5 @@
 <template>
   <div class="signup">
-    <h1 class="signup__ttl">Зарегистрироваться</h1>
     <span class="signup__warning">
       {{error}}
     </span>
@@ -77,9 +76,7 @@ export default {
     justify-content: center;
     align-items: center;
     padding: 40px;
-    background-color: white;
-    width: 400px;
-    box-shadow: 1px 1px 1px 1px black;
+    width: 100%;
   }
 
   .signup__ttl {

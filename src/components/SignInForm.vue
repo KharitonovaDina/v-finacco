@@ -1,6 +1,5 @@
 <template>
   <div class="signin">
-    <h1 class="signin__ttl">Войти</h1>
     <span class="signin__warning">
       {{error}}
     </span>
@@ -70,9 +69,9 @@ export default {
   .signin {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 40px;
+    //justify-content: center;
+    //align-items: center;
+    //padding: 40px;
     //background-color: white;
     width: 100%;
     //height: 200px;

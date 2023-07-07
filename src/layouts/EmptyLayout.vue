@@ -1,7 +1,10 @@
 <template>
   <div class="empty">
-    <UiModal v-show="dialog">
-      <SignInForm/>
+    <UiModal :modal="open">
+      <template v-slot:header>Вход</template>
+      <template v-slot:main>
+        <SignInForm/>
+      </template>
     </UiModal>
     <nav class="navbar">
       <router-link class="navbar__logo" to="/">
@@ -10,7 +13,7 @@
       <UiButton
         v-if="this.$store.getters.isUserAuthenticated"
         class="navbar__btn"
-        title="Log out"
+        title="Выйти"
         @event="signout"
       />
       <div
@@ -37,26 +40,42 @@
 import UiButton from '@/components/UiButton.vue';
 import UiModal from '@/components/UiModal.vue';
 import SignInForm from '@/components/SignInForm.vue';
+// import SignUpForm from '@/components/SignUpForm.vue';
 
 export default {
   name: 'EmptyLayout',
-  components: { SignInForm, UiModal, UiButton },
+  components: {
+    // SignUpForm,
+    SignInForm,
+    UiModal,
+    UiButton,
+  },
   data: () => ({
-    dialog: false,
+    open: null,
+    clickSignin: false,
+    clickSignup: false,
   }),
+
+  // computed: {
+  //   modal() {
+  //     if (this.open) return true;
+  //   },
+  // },
 
   methods: {
     openSignInDialog() {
-      this.dialog = true;
+      this.open = true;
+      this.clickSignin = true;
     },
     openSignUpDialog() {
       this.dialog = true;
+      this.clickSignup = true;
     },
     signout() {
       this.$store.dispatch('signout');
-      this.dialog = false;
     },
   },
+
 };
 </script>
 
