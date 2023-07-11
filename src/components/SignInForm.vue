@@ -1,24 +1,41 @@
 <template>
   <div class="signin">
-    <span class="signin__warning">
-      {{error}}
-    </span>
-    <form class="signin__form">
-      <UiInput
-        class="signin__input"
-        label="Логин"
-        type="email"
-        placeholder="Введите логин"
-        v-model="email"
-      />
+    <form
+      class="signin__form"
+      id="signin"
+      novalidate
+    >
+      <div class="signin__err-wrap" v-show="error">
+        <span>{{ error }}</span>
+      </div>
 
-      <UiInput
-        class="signin__input"
-        label="Пароль"
-        type="password"
-        placeholder="Введите пароль"
-        v-model="password"
-      />
+      <div class="signin__input-wrap">
+        <UiInput
+          class="signin__input"
+          label="Логин"
+          type="email"
+          placeholder="Введите логин"
+          v-model="email"
+          @blur="checkEmail"
+        />
+        <ul class="signin__list" v-show="emailError.length">
+          <li class="signin__list-item" v-for="(err, i) in emailError" :key="i">{{ err }}</li>
+        </ul>
+      </div>
+
+      <div class="signin__input-wrap">
+        <UiInput
+          class="signin__input"
+          label="Пароль"
+          type="password"
+          placeholder="Введите пароль"
+          v-model="password"
+          @blur="checkPassword"
+        />
+        <ul class="signin__list" v-show="passError.length">
+          <li class="signin__list-item" v-for="(err, i) in passError" :key="i">{{ err }}</li>
+        </ul>
+      </div>
 
       <UiButton
         class="signin__btn"
@@ -40,10 +57,15 @@ export default {
   data: () => ({
     email: null,
     password: null,
+    errors: [],
+    emailError: [],
+    passError: [],
   }),
+  // TODO обработка ошибок с сервера (auth/user-not-found), auth/wrong-password
+  // TODO обработка закрытия попапа
   computed: {
     error() {
-      return this.$store.getters.getError;
+      return this.$store.getters.getError.includes('user-not-found');
     },
     processing() {
       return this.$store.getters.getProcessing;
@@ -61,6 +83,40 @@ export default {
     signin() {
       this.$store.dispatch('signin', { email: this.email, password: this.password });
     },
+
+    checkEmail() {
+      this.emailError = [];
+      if (!this.email) {
+        this.emailError.push('Укажите электронную почту');
+      } else if (!this.validEmail(this.email)) {
+        this.emailError.push('Укажите корректный адрес электронной почты');
+      }
+
+      if (!this.emailError.length) {
+        return true;
+      }
+      // e.preventDefault();
+      return this.emailError;
+    },
+
+    checkPassword() {
+      this.passError = [];
+      if (!this.password) {
+        this.passError.push('Укажите пароль');
+      } else if (this.password.length < 6) {
+        this.passError.push('Пароль слишком короткий - минимум 6 символов');
+      }
+      if (!this.passError.length) {
+        return true;
+      }
+      // e.preventDefault();
+      return this.passError;
+    },
+
+    validEmail(email) {
+      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
   },
 };
 </script>
@@ -69,13 +125,7 @@ export default {
   .signin {
     display: flex;
     flex-direction: column;
-    //justify-content: center;
-    //align-items: center;
-    //padding: 40px;
-    //background-color: white;
     width: 100%;
-    //height: 200px;
-    //box-shadow: 1px 1px 1px 1px black;
   }
 
   .signin__ttl {
@@ -85,7 +135,23 @@ export default {
     margin-bottom: 28px;
   }
 
-  .signin__input {
+  .signin__err-wrap {
+    background-color: lightpink;
+    margin-bottom: 24px;
+    padding: 24px;
+    color: darkred;
+  }
+
+  .signin__list {
+  }
+  .signin__list-item {
+    color: darkred;
+    font-family: $primary-f;
+    font-weight: 400;
+    font-size: 12px;
+  }
+
+  .signin__input-wrap {
     margin-bottom: 28px;
   }
 

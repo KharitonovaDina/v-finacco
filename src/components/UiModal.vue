@@ -44,6 +44,7 @@ export default {
   watch: {
     modal(val) {
       console.log(val);
+      if (!val) this.$props.modal = false;
     },
   },
 };

@@ -7,6 +7,7 @@
         :type="type"
         :value="value"
         @input="$emit('input', $event.target.value)"
+        @blur="$emit('blur')"
         id="input"
         :placeholder= "placeholder"
       >

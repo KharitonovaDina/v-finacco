@@ -17,5 +17,10 @@ export default {
     background-color: rebeccapurple;
     padding: 6px 0;
     border: none;
+
+    &:disabled {
+      background-color: gray;
+      color: black;
+    }
   }
 </style>
