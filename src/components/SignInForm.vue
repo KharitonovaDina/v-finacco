@@ -5,8 +5,8 @@
       id="signin"
       novalidate
     >
-      <div class="signin__err-wrap" v-show="error">
-        <span>{{ error }}</span>
+      <div class="signin__err-wrap" v-if="error">
+        <span>{{ errorMessage }}</span>
       </div>
 
       <div class="signin__input-wrap">
@@ -16,7 +16,7 @@
           type="email"
           placeholder="Введите логин"
           v-model="email"
-          @blur="checkEmail"
+          @input="checkEmail"
         />
         <ul class="signin__list" v-show="emailError.length">
           <li class="signin__list-item" v-for="(err, i) in emailError" :key="i">{{ err }}</li>
@@ -30,7 +30,7 @@
           type="password"
           placeholder="Введите пароль"
           v-model="password"
-          @blur="checkPassword"
+          @input="checkPassword"
         />
         <ul class="signin__list" v-show="passError.length">
           <li class="signin__list-item" v-for="(err, i) in passError" :key="i">{{ err }}</li>
@@ -41,7 +41,7 @@
         class="signin__btn"
         title="Войти"
         @event="signin"
-        :disabled="processing"
+        :disabled="processing || isValid"
       />
     </form>
   </div>
@@ -50,28 +50,51 @@
 <script>
 import UiButton from '@/components/UiButton.vue';
 import UiInput from '@/components/UiInput.vue';
+import _ from 'lodash';
 
 export default {
   name: 'SignInForm',
   components: { UiButton, UiInput },
+
   data: () => ({
     email: null,
     password: null,
-    errors: [],
     emailError: [],
     passError: [],
   }),
-  // TODO обработка ошибок с сервера (auth/user-not-found), auth/wrong-password
-  // TODO обработка закрытия попапа
+
+  // TODO открытие нужных страниц для авторизованного пользователя и закрытие ненужных
+  // TODO спрайты
   computed: {
     error() {
-      return this.$store.getters.getError.includes('user-not-found');
+      return this.$store.getters.getError;
     },
+
+    errorMessage() {
+      let a = '';
+      if (this.$store.getters.getError.includes('user-not-found')) {
+        a = 'Пользователь не найден';
+      }
+      if (this.$store.getters.getError.includes('wrong-password')) {
+        a = 'Неверный пароль. Попробуйте еще раз';
+      }
+      return a;
+    },
+
     processing() {
       return this.$store.getters.getProcessing;
     },
     isUserAuthenticated() {
       return this.$store.getters.isUserAuthenticated;
+    },
+    isValid() {
+      if (!this.email
+        || !this.password
+        || !this.validEmail(this.email)
+        || this.password.length < 6) {
+        return true;
+      }
+      return false;
     },
   },
   watch: {
@@ -84,7 +107,7 @@ export default {
       this.$store.dispatch('signin', { email: this.email, password: this.password });
     },
 
-    checkEmail() {
+    checkEmail: _.debounce(function () {
       this.emailError = [];
       if (!this.email) {
         this.emailError.push('Укажите электронную почту');
@@ -97,9 +120,9 @@ export default {
       }
       // e.preventDefault();
       return this.emailError;
-    },
+    }, 500),
 
-    checkPassword() {
+    checkPassword: _.debounce(function () {
       this.passError = [];
       if (!this.password) {
         this.passError.push('Укажите пароль');
@@ -111,7 +134,7 @@ export default {
       }
       // e.preventDefault();
       return this.passError;
-    },
+    }, 500),
 
     validEmail(email) {
       const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

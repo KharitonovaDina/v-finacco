@@ -1,9 +1,10 @@
 <template>
   <div class="empty">
-    <UiModal :modal="open">
-      <template v-slot:header>Вход</template>
+    <UiModal v-model="open">
+      <template v-slot:header>{{ modalHeader }}</template>
       <template v-slot:main>
-        <SignInForm/>
+        <SignInForm v-show="clickSignin"/>
+        <SignUpForm v-show="clickSignup"/>
       </template>
     </UiModal>
     <nav class="navbar">
@@ -40,36 +41,33 @@
 import UiButton from '@/components/UiButton.vue';
 import UiModal from '@/components/UiModal.vue';
 import SignInForm from '@/components/SignInForm.vue';
-// import SignUpForm from '@/components/SignUpForm.vue';
+import SignUpForm from '@/components/SignUpForm.vue';
 
 export default {
   name: 'EmptyLayout',
   components: {
-    // SignUpForm,
+    SignUpForm,
     SignInForm,
     UiModal,
     UiButton,
   },
   data: () => ({
-    open: null,
+    open: false,
     clickSignin: false,
     clickSignup: false,
+    modalHeader: null,
   }),
-
-  // computed: {
-  //   modal() {
-  //     if (this.open) return true;
-  //   },
-  // },
 
   methods: {
     openSignInDialog() {
       this.open = true;
       this.clickSignin = true;
+      this.modalHeader = 'Вход';
     },
     openSignUpDialog() {
-      this.dialog = true;
+      this.open = true;
       this.clickSignup = true;
+      this.modalHeader = 'Регистрация';
     },
     signout() {
       this.$store.dispatch('signout');

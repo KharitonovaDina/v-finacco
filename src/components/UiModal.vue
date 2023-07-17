@@ -1,6 +1,6 @@
 <template>
   <div class="modal"
-       v-show="modal"
+       v-show="value"
        @click="close"
        @keyup.esc="close"
   >
@@ -24,7 +24,7 @@
 <script>
 export default {
   name: 'UiModal',
-  props: ['modal'],
+  props: ['value'],
 
   mounted() {
     document.addEventListener('keyup', (e) => {
@@ -36,15 +36,7 @@ export default {
 
   methods: {
     close() {
-      this.$props.modal = false;
-      // this.$emit('closeModal');
-    },
-  },
-
-  watch: {
-    modal(val) {
-      console.log(val);
-      if (!val) this.$props.modal = false;
+      this.$emit('input', false);
     },
   },
 };
