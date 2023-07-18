@@ -1,8 +1,14 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+// import Store from '@/store';
 import HomeView from '../views/HomeView.vue';
 
 Vue.use(VueRouter);
+
+// function authGuard(from, to, next) {
+//   if (Store.getters.isUserAuthenticated) next();
+//   else next('/');
+// }
 
 const routes = [
   {
@@ -14,8 +20,21 @@ const routes = [
   {
     path: '/auth',
     name: 'auth',
-    meta: { layout: 'empty' },
+    meta: { layout: 'main' },
     component: () => import(/* webpackChunkName: "auth" */ '../views/AuthView.vue'),
+    // beforeEnter: authGuard,
+  },
+  {
+    path: '/plan',
+    name: 'plan',
+    meta: { layout: 'main' },
+    component: () => import(/* webpackChunkName: "plan" */ '../views/PlanView.vue'),
+  },
+  {
+    path: '/credits',
+    name: 'credits',
+    meta: { layout: 'main' },
+    component: () => import(/* webpackChunkName: "credits" */ '../views/CreditsView.vue'),
   },
 ];
 

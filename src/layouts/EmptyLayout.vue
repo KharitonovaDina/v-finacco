@@ -11,18 +11,11 @@
       <router-link class="navbar__logo" to="/">
         Finacco
       </router-link>
-      <UiButton
-        v-if="this.$store.getters.isUserAuthenticated"
-        class="navbar__btn"
-        title="Выйти"
-        @event="signout"
-      />
       <div
-        v-else
         class="navbar__btn-wrap"
       >
         <UiButton
-          class="navbar__btn"
+          class="navbar__btn navbar__btn_flat"
           title="Войти"
           @event="openSignInDialog"
         />
@@ -69,9 +62,6 @@ export default {
       this.clickSignup = true;
       this.modalHeader = 'Регистрация';
     },
-    signout() {
-      this.$store.dispatch('signout');
-    },
   },
 
 };
@@ -108,6 +98,11 @@ export default {
   }
 
   .navbar__btn {
-    width: 200px;
+    width: 100%;
+    padding: 0 20px;
+    &_flat {
+      background-color: transparent;
+      color: rebeccapurple;
+    }
   }
 </style>

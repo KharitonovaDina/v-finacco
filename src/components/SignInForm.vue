@@ -97,11 +97,11 @@ export default {
       return false;
     },
   },
-  watch: {
-    isUserAuthenticated(val) {
-      if (val === true) console.log('Yes');
-    },
-  },
+  // watch: {
+  //   isUserAuthenticated(val) {
+  //     if (val === true) this.$router.push('/test');
+  //   },
+  // },
   methods: {
     signin() {
       this.$store.dispatch('signin', { email: this.email, password: this.password });
